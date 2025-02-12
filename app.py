@@ -1,16 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template
+import datetime
 
 app = Flask(__name__)
 
+# Manually set the next race's date
+NEXT_RACE = {
+	"name": "Australian Grand Prix",
+	"date": "2025-03-16",  # Check this format
+}
+
 @app.route("/")
-def index():
-	return render_template("index.html")
-
-@app.route("/<name>")
-def welcome(name):
-	return render_template("index.html", name=name)
-
+def home():
+	print("DEBUG: Race Date in Flask:", NEXT_RACE["date"])  # Print to console
+	return render_template("index.html", race=NEXT_RACE)
 
 if __name__ == "__main__":
 	app.run(debug=True)
-

@@ -1,13 +1,70 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-	<title>FlaskTest</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Next F1 Race</title>
 </head>
-
 <body>
-	<h2>Welcome To GFG</h2>
-	<h3>Welcome, {{name}}</h3>
-</body>
+<h1>Next Race: {{ race.name }}</h1>
+<h2>Date: {{ race.date }}</h2>
+<h3>Countdown: <span id="countdown"></span></h3>
 
+<!-- Store the race date in a hidden element -->
+<span id="race-date" data-date="{{ race.date }}"></span>
+
+<span id="race-date" data-date="{{ race.date }}"></span>
+
+<script>
+	function updateCountdown() {
+		// Get the race date from HTML (trim any spaces)
+		const raceDateStr = document.getElementById("race-date").getAttribute("data-date").trim();
+		console.log("Race Date (String from HTML):", raceDateStr);
+
+		if (!raceDateStr) {
+			document.getElementById("countdown").innerHTML = "Error: No race date found!";
+			console.error("Error: No race date found!");
+			return;
+		}
+
+		// Try different formats to ensure JavaScript reads the date correctly
+		let raceDate = new Date(raceDateStr); // Default format
+		if (isNaN(raceDate)) {
+			raceDate = new Date(raceDateStr + "T00:00:00Z"); // Force UTC format
+		}
+		if (isNaN(raceDate)) {
+			raceDate = new Date(raceDateStr.replace(/-/g, '/')); // Alternative format
+		}
+
+		console.log("Race Date (Converted to Timestamp):", raceDate.getTime());
+
+		if (isNaN(raceDate)) {
+			document.getElementById("countdown").innerHTML = "Error: Invalid race date!";
+			console.error("Error: Invalid race date!");
+			return;
+		}
+
+		const now = new Date().getTime();
+		const timeLeft = raceDate.getTime() - now;
+
+		if (timeLeft <= 0) {
+			document.getElementById("countdown").innerHTML = "The race has started!";
+			return;
+		}
+
+		const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+		const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+		const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+		document.getElementById("countdown").innerHTML =
+				`${days}d ${hours}h ${minutes}m ${seconds}s`;
+	}
+
+	setInterval(updateCountdown, 1000);
+	updateCountdown();
+</script>
+
+
+</body>
 </html>
