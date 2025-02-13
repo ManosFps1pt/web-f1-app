@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Manually set the next race's date
 NEXT_RACE = {
 	"name": "Australian Grand Prix",
-	"date": "2025-03-16",  # Check this format
+	"date": "2025-03-14",  # Check this format
 }
 
 @app.route("/")
