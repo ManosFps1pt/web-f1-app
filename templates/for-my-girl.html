@@ -94,18 +94,19 @@
 <script>
     function updateTimer() {
         const timerStart = document.getElementById("counter-start").getAttribute("data-date").trim();
+        console.log(timerStart);
         if (!timerStart) return;
 
         // Convert the date to a Date object
-        let raceDate = new Date(timerStart + "T00:00:00Z");
+        let date = new Date(timerStart);
 
-        if (isNaN(raceDate.getTime())) {
+        if (isNaN(date.getTime())) {
             console.error("Invalid date format: " + timerStart);
             return;
         }
 
         let now = new Date().getTime();
-        let delta = now - raceDate; // Time passed since the event
+        let delta = now - date; // Time passed since the event
 
         // Convert delta into days, hours, minutes, seconds
         let days = Math.floor(delta / (1000 * 60 * 60 * 24));

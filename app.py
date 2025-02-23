@@ -13,8 +13,8 @@ counter_time = "2025-02-08 20:00"
 
 @app.route("/")
 def home():
-    print("DEBUG: home page in Flask:")  # Print to console
-    return render_template("index.html")
+	print("DEBUG: home page in Flask:")  # Print to console
+	return render_template("index.html")
 
 
 @app.route("/f1")
